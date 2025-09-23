@@ -1,0 +1,52 @@
+.aboutUs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  background-color: #FFEEAF;
+}
+
+.leftImage {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.leftImage img {
+  width: 100%;
+  max-width: 600px;
+}
+
+.rightContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.escoffierImage {
+  width: 60px;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.finalText {
+  font-size: 1.1rem;
+}

@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Substitua 'HYWenHei' pela fonte exata, se tiver o arquivo */
+@font-face {
+  font-family: 'HYWenHei';
+  src: url('/fonts/HYWenHei.ttf') format('truetype');
+  font-weight: bold;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #FFEEAF;
+}
+
+.bold-text {
+  font-family: 'HYWenHei', Arial, sans-serif;
+  font-weight: bold;
+}
