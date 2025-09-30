@@ -4,7 +4,6 @@ import styles from './HeroSection.module.css';
 const HeroSection = () => {
   return (
     <section className={styles.heroSection}>
-      <img src="/xianglingPresentation.png" alt="Xiangling" className={styles.heroImage} />
       <div className={styles.overlay}>
         <h1 className={`${styles.welcomeText} bold-text`}>
           Bem-vindos ao Mora & Meals, o seu refúgio culinário

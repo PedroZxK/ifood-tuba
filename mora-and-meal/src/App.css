@@ -3,7 +3,7 @@
 /* Substitua 'HYWenHei' pela fonte exata, se tiver o arquivo */
 @font-face {
   font-family: 'HYWenHei';
-  src: url('/fonts/HYWenHei.ttf') format('truetype');
+  src: url('./assets/fonts/zh-cn.ttf') format('truetype');
   font-weight: bold;
 }
 

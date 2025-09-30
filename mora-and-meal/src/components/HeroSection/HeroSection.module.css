@@ -6,6 +6,10 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  background-image: url('/xianglingPresentation.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .heroImage {
@@ -15,7 +19,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
 }
 
 .overlay {
@@ -28,6 +31,7 @@
 }
 
 .welcomeText {
+  width: 75%;
   font-size: 2.5rem;
   margin-bottom: 2rem;
 }
@@ -45,8 +49,9 @@
 .ctaButton {
   background-color: white;
   border: 1px solid black;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
+  padding: 1rem 3rem;
+  font-size: 2rem;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 999px;
+  color: black;
 }
