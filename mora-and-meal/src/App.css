@@ -7,10 +7,19 @@
   font-weight: bold;
 }
 
+/* Defina a cor de fundo AQUI, não no body. 
+  Isso garante que ela se estenda pela altura definida no #root. 
+*/
+.app-container {
+    background-color: #FFEEAF; 
+    min-height: 100vh;
+    /* Não adicione display: flex ou regras de layout aqui! */
+}
+
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #FFEEAF;
+    /* O body apenas herda as margens zero do index.css */
+    font-family: Arial, sans-serif;
+    /* NÃO defina a cor de fundo aqui para evitar que ela se sobreponha a estilos mais específicos */
 }
 
 .bold-text {

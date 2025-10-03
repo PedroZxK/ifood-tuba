@@ -1,9 +1,12 @@
+// src/components/HeroSection/HeroSection.jsx
+
 import React from 'react';
 import styles from './HeroSection.module.css';
 
 const HeroSection = () => {
   return (
     <section className={styles.heroSection}>
+      {/* <img src="/xianglingPresentation.png" alt="Xiangling" className={styles.heroImage} />  <- REMOVER ESTA LINHA */}
       <div className={styles.overlay}>
         <h1 className={`${styles.welcomeText} bold-text`}>
           Bem-vindos ao Mora & Meals, o seu refúgio culinário

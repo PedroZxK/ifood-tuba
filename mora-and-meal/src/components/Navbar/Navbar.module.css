@@ -1,34 +1,49 @@
+/* src/components/Navbar/Navbar.module.css */
+
 .navbar {
+  /* Mantém a estrutura de layout e padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 4rem; /* Aumenta o padding lateral para afastar das bordas */
   color: #000;
+  position: absolute; /* Fixa a Navbar no topo do HeroSection */
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+  z-index: 10; /* Garante que fique acima de outros elementos */
 }
 
 .logo {
   display: flex;
   align-items: center;
+  /* Ocupa o mínimo de espaço necessário */
 }
 
 .logoImage {
-  width: 30%;
+  /* Ajusta o tamanho da imagem da logo */
+  width: 45px; 
+  height: 45px;
   margin-right: 0.5rem;
 }
 
 .logoText {
   font-family: 'HYWenHei';
-  width: 20%;
-  font-size: 1rem;
+  /* Remove a largura fixa */
+  width: auto; 
+  font-size: 1.2rem; /* Levemente maior e mais visível */
   font-weight: bold;
 }
 
 .navLinks {
-  width: 60%;
+  /* Remove a largura fixa */
+  width: auto; 
   list-style: none;
   display: flex;
-  justify-content: space-evenly;
-  gap: 2rem;
+  /* Ajusta o espaçamento entre os links */
+  justify-content: flex-end; 
+  gap: 3rem; /* Aumenta o espaço entre os links */
   margin: 0;
   padding: 0;
 }
@@ -36,7 +51,7 @@
 .navLinks a {
   text-decoration: none;
   color: #000;
-  font-size: 1.5rem;
+  font-size: 1.1rem; /* Ajusta o tamanho da fonte */
   font-weight: bold;
   font-family: 'HYWenHei';
 }
