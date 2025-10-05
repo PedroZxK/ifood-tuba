@@ -1,0 +1,248 @@
+/* src/pages/PedidosPage/PedidosPage.module.css */
+
+.pedidosContainer {
+    min-height: 100vh;
+    background-image: url('/lancheoverlay.png');
+    position: relative; /* Necessário para posicionar o ::before */
+    overflow: hidden; /* Garante que o overlay não cause scroll */
+}
+
+/* Ajustes de z-index para que a Navbar e o conteúdo fiquem acima do overlay */
+.navbar {
+    /* ... (outros estilos) ... */
+    z-index: 1; 
+}
+
+.mainContent {
+    /* ... (outros estilos) ... */
+    z-index: 1; 
+}
+
+/* --- Navbar (Copiado do MenuPage) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 4rem;
+    background-color: #F5CE63;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logoArea a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.logoImage {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.logoText {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'HYWenHei', Arial, sans-serif;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    width: 400px;
+}
+
+.searchIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+}
+
+.searchInput {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1rem;
+    background-color: transparent; 
+    color: #000;
+}
+.searchInput::placeholder {
+    color: #555;
+}
+
+.userIcons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navIcon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+/* --- Fim Navbar --- */
+
+
+.mainContent {
+    padding: 2rem 4rem;
+}
+
+.pageTitle {
+    font-size: 2.5rem;
+    color: #000;
+    margin-bottom: 2rem;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 3rem;
+}
+
+/* --- Detalhes do Pedido (Coluna Esquerda) --- */
+.orderDetailsBox {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.headerIcon {
+    width: 50px;
+}
+
+.headerTitle {
+    font-size: 1.8rem;
+    color: #000;
+}
+
+.orderList {
+    flex-grow: 1;
+    padding: 0 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+.orderItem:last-child {
+    border-bottom: none;
+}
+
+.itemName, .itemPrice {
+    font-size: 1rem;
+    color: #000;
+}
+
+.totalBox {
+    background-color: #FFEEAF; /* Cor do fundo do valor total */
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+}
+
+/* --- Formas de Pagamento (Coluna Direita) --- */
+.paymentBox {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.paymentOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.optionBox {
+    background-color: #FFEEAF; /* Cor de fundo das opções */
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.2s;
+}
+
+.selectedOption {
+    border: 2px solid #F5CE63; /* Borda destacada para a opção selecionada */
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.checked {
+    width: 10px;
+    height: 10px;
+    background-color: #F5CE63; /* Cor do checkmark */
+    border-radius: 50%;
+}
+
+.optionText {
+    flex-grow: 1;
+    font-size: 1.1rem;
+    color: #000;
+}
+
+.optionIcon {
+    width: 40px;
+    margin-left: 1rem;
+    flex-shrink: 0;
+}
+
+.payButtonBox {
+    background-color: #FFEEAF; /* Cor do fundo do botão pagar */
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.payButton {
+    width: 80%;
+    background-color: #E63946; /* Vermelho */
+    color: white;
+    border: none;
+    padding: 0.75rem 0;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}

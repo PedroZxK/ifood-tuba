@@ -32,6 +32,7 @@
   font-family: 'HYWenHei';
   /* Remove a largura fixa */
   width: auto; 
+  color: black;
   font-size: 1.2rem; /* Levemente maior e mais visível */
   font-weight: bold;
 }

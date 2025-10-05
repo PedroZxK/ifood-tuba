@@ -1,8 +1,20 @@
+// src/pages/LoginPage/LoginPage.jsx
+
 import React from 'react';
 import styles from './LoginPage.module.css';
-import { Link } from 'react-router-dom'; // Importa Link para redirecionamento
+// Importa Link para redirecionamento e useNavigate
+import { Link, useNavigate } from 'react-router-dom'; 
 
 const LoginPage = () => {
+  const navigate = useNavigate(); // Inicializa o hook de navegação
+
+  // Função que simula o login e redireciona para a página de Menu
+  const handleLogin = (e) => {
+    e.preventDefault(); // Impede o comportamento padrão de formulário (recarregar)
+    // Lógica de login simulada: Apenas redireciona
+    navigate('/menu'); 
+  };
+
   return (
     <div className={styles.container}>
       {/* Imagem no lado esquerdo com fade-out para a direita */}
@@ -24,11 +36,15 @@ const LoginPage = () => {
           </div>
 
           <button className={styles.googleButton}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_Google_g_standard.png" alt="Google Logo" className={styles.googleIcon} />
+            <img src="/google.png" alt="Google Logo" className={styles.googleIcon} />
             Sign in with Google
           </button>
           
-          <button className={`${styles.submitButton} bold-text`}>
+          {/* Adicionamos o evento onClick para a função handleLogin */}
+          <button 
+            className={`${styles.submitButton} bold-text`}
+            onClick={handleLogin} // <-- AQUI FAZ O REDIRECIONAMENTO
+          >
             Entrar
           </button>
           

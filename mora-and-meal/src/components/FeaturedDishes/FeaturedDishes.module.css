@@ -53,3 +53,7 @@
   width: 100%;
   max-width: 600px;
 }
+
+p, h2 {
+  color: black;
+}
