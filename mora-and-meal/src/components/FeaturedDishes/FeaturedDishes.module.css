@@ -1,13 +1,15 @@
 .featuredDishes {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: 4rem 5rem;
   background-color: #FFEEAF;
+  gap: 2rem;
 }
 
 .leftContent {
   flex: 1;
+  max-width: 45%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -24,7 +26,7 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .dishList {
@@ -37,23 +39,84 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.dishItem:hover {
+  transform: scale(1.05);
 }
 
 .dishImage {
   width: 150px;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .rightImage {
   flex: 1;
-  display: flex;
-  justify-content: flex-end;
+  max-width: 35%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-left: auto;
 }
 
 .rightImage img {
   width: 100%;
   max-width: 600px;
+  object-fit: cover;
+  display: block;
 }
 
-p, h2 {
+.rightImage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFEEAF;
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 1) 100%);
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  pointer-events: none;
+}
+
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.dishItem:hover {
+  transform: scale(1.08);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+p,
+h2 {
   color: black;
 }

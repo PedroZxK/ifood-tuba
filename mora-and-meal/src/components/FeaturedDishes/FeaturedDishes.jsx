@@ -25,7 +25,8 @@ const FeaturedDishes = () => {
         </div>
       </div>
       <div className={styles.rightImage}>
-        <img src="/xianglingPresentation2.png" alt="Xiangling" />
+        <div className={styles.imageOverlay}></div>
+        <img src="/xianglingPresentation2.png" alt="Xiangling" className={styles.xiangImage} />
       </div>
     </section>
   );

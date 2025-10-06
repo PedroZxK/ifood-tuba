@@ -2,56 +2,81 @@
   position: relative;
   width: 100%;
   height: 100vh;
+  background-image: url('/xianglingPresentation.png');
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-image: url('/xianglingPresentation.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.heroImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .overlay {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
   color: #000;
+  padding: 2rem;
+  border-radius: 20px;
+  animation: fadeIn 2s ease forwards;
 }
 
 .welcomeText {
-  width: 75%;
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 2rem;
 }
 
 .ctaContainer {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .guobaImage {
-  width: 100px;
+  width: 120px;
+  animation: bounce 2s infinite;
 }
 
 .ctaButton {
-  background-color: white;
-  border: 1px solid black;
+  background-color: #fff;
+  border: 2px solid #000;
   padding: 1rem 3rem;
   font-size: 2rem;
-  cursor: pointer;
   border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s, color 0.3s;
   color: black;
+}
+
+.ctaButton:hover {
+  transform: scale(1.05);
+  background-color: #F5CE63;
+  color: black;
+  border-color: #000;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }

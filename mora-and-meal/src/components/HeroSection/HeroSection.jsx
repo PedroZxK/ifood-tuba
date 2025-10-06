@@ -1,23 +1,27 @@
-// src/components/HeroSection/HeroSection.jsx
-
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './HeroSection.module.css';
 
-const HeroSection = () => {
+export default function HeroSection() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/menu");
+  };
+
   return (
     <section className={styles.heroSection}>
-      {/* <img src="/xianglingPresentation.png" alt="Xiangling" className={styles.heroImage} />  <- REMOVER ESTA LINHA */}
       <div className={styles.overlay}>
         <h1 className={`${styles.welcomeText} bold-text`}>
           Bem-vindos ao Mora & Meals, o seu refúgio culinário
         </h1>
         <div className={styles.ctaContainer}>
           <img src="/guoba.png" alt="Guoba" className={styles.guobaImage} />
-          <button className={styles.ctaButton}>Peça Aqui!</button>
+          <button className={styles.ctaButton} onClick={handleClick}>
+            Peça Aqui!
+          </button>
         </div>
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

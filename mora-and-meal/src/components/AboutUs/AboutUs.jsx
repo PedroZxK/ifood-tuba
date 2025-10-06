@@ -5,11 +5,14 @@ const AboutUs = () => {
   return (
     <section className={styles.aboutUs}>
       <div className={styles.leftImage}>
-        <img src="/xianglingPresentation3.png" alt="Xiangling" />
+        <div className={styles.imageOverlay}></div>
+        <img src="/xianglingPresentation3.png" alt="Xiangling" className={styles.xiangImage} />
       </div>
       <div className={styles.rightContent}>
         <div className={styles.header}>
-          <h2 className={`${styles.title} bold-text`}>A perfeição tem um sabor. Descubra-o em <span className={styles.underline}>Mora & Meals</span></h2>
+          <h2 className={`${styles.title} bold-text`}>
+            A perfeição tem um sabor. Descubra-o em <span className={styles.underline}>Mora & Meals</span>
+          </h2>
           <img src="/escoffier.png" alt="Escoffier" className={styles.escoffierImage} />
         </div>
         <p className={styles.description}>

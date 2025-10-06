@@ -1,60 +1,66 @@
-/* src/pages/MenuPage/MenuPage.module.css (AJUSTES FINAIS) */
-
 .menuContainer {
     min-height: 100vh;
-    background-color: #FFEEAF; 
+    background-color: #FFEEAF;
     display: flex;
     flex-direction: column;
+    font-family: 'HYWenHei', sans-serif;
 }
 
-.mainContent {
-    flex-grow: 1; 
-    padding: 1rem 4rem;
-}
-
-/* --- 1. Navbar do Menu --- */
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 4rem;
-    background-color: #F5CE63; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: rgba(245, 206, 99, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.logoArea a {
+.logo {
     display: flex;
     align-items: center;
-    text-decoration: none;
-    color: #000;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.05) rotate(-2deg);
 }
 
 .logoImage {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%; 
-    margin-right: 0.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 .logoText {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
-    font-family: 'HYWenHei', Arial, sans-serif;
+    color: black;
 }
 
 .searchBar {
     display: flex;
     align-items: center;
-    background-color: white; /* AJUSTE: Fundo branco (já estava, mas garantindo) */
-    border: 1px solid #ccc; /* Borda cinza claro */
+    background: #fff;
     border-radius: 50px;
     padding: 0.5rem 1rem;
-    width: 400px; 
+    width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.searchBar:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .searchIcon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
     margin-right: 0.5rem;
 }
 
@@ -62,14 +68,14 @@
     border: none;
     outline: none;
     flex-grow: 1;
+    background: transparent;
+    color: #000;
     font-size: 1rem;
-    background-color: transparent; /* Garante que o input interno não tem fundo */
-    color: #000; /* AJUSTE: Texto digitado preto */
-}
-.searchInput::placeholder {
-    color: #555; /* Texto cinza escuro para o placeholder */
 }
 
+.searchInput::placeholder {
+    color: #555;
+}
 
 .userIcons {
     display: flex;
@@ -77,18 +83,23 @@
 }
 
 .navIcon {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
+    transition: transform 0.3s;
 }
 
-/* --- 2. Seção de Categorias --- */
+.navIcon:hover {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* Categorias */
 .categoriesSection {
     display: flex;
     justify-content: center;
-    gap: 3rem;
+    gap: 2.5rem;
     padding: 2rem 0;
-    text-align: center;
+    flex-wrap: wrap;
 }
 
 .categoryItem {
@@ -96,205 +107,241 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    font-weight: bold;
-    color: #000; /* AJUSTE: Texto da categoria preto */
+    transition: transform 0.3s;
+}
+
+.categoryItem:hover {
+    transform: translateY(-5px);
 }
 
 .categoryCircle {
-    width: 80px;
-    height: 80px;
-    background-color: #FBDB84; 
+    width: 90px;
+    height: 90px;
+    background: #FBDB84;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .categoryIcon {
-    width: 70%;
-    height: 70%;
+    width: 60%;
+    height: 60%;
     object-fit: contain;
 }
 
-/* --- 3. Seção de Promoção do Dia --- */
+.categoryItem p {
+    margin-top: 0.5rem;
+    font-weight: bold;
+}
+
+/* Promoção */
 .promotionSection {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: center; 
-    gap: 3rem; 
-    padding: 4rem 0;
+    gap: 3rem;
+    padding: 3rem 0;
+    flex-wrap: wrap-reverse;
 }
 
 .promoContent {
     flex: 1;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start; 
-    text-align: left;
-    max-width: 400px; 
+    gap: 1.2rem;
 }
 
 .promoTitle {
     font-size: 2.5rem;
-    color: #000; 
-    margin-left: 0; 
+    text-align: center;
+    color: black;
 }
 
 .promoTextContainer {
     position: relative;
-    width: 350px; 
-    height: 100px; 
+    width: 100%;
+    height: 100px;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    align-self: center; /* Centraliza o bloco do texto da promoção */
-    margin-bottom: 1.5rem; /* Adiciona margem para afastar do botão */
+    justify-content: center;
+    align-items: center;
 }
 
 .promoImageText {
     position: absolute;
-    width: 350px; 
+    width: 100%;
 }
 
 .promoDishText {
     position: relative;
-    z-index: 2; 
+    z-index: 2;
     font-size: 1.3rem;
-    font-family: 'HYWenHei', Arial, sans-serif;
-    color: #000;
-    margin: 0; 
     text-align: center;
-    width: 100%;
-}
-
-.promoButton {
-    background-color: #E63946; 
-    color: white;
-    border: none;
-    padding: 0.75rem 2rem;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    width: 150px;
-    /* AJUSTE: Centraliza o botão 'Peça Já!' na coluna de conteúdo da promoção */
-    align-self: center; 
+    color: black;
 }
 
 .promoImageContainer {
     flex: 1;
+    max-width: 500px;
     display: flex;
-    justify-content: flex-end; 
-    max-width: 500px; 
+    justify-content: center;
 }
 
 .promoDishImage {
     width: 100%;
     max-width: 500px;
+    margin-bottom: -20px;
     object-fit: contain;
-    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2)); 
+    border-radius: 20px;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s;
 }
 
-/* --- 4. Seção de Filtros e Pratos --- */
-.dishesSection {
-    padding-bottom: 4rem;
+.promoDishImage:hover {
+    transform: scale(1.05) rotate(-1deg);
+}
+
+.peçaJaContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.promoButton {
+    background: #E63946;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: all 0.3s;
+}
+
+.promoButton:hover {
+    background: #D62828;
+    transform: scale(1.05);
 }
 
 .filtersTitle {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #000; /* AJUSTE: Texto do Filtros preto */
+    margin-left: 2rem;
+    color: black;
 }
 
 .filterBar {
     display: flex;
     gap: 1rem;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
 .filterButton {
-    background-color: white; 
-    color: #888; 
+    background: white;
+    color: #888;
     border: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-    font-size: 1rem;
+    margin-left: 2rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.filterButton:hover {
+    transform: scale(1.05);
 }
 
 .activeFilter {
-    background-color: #E63946; 
-    color: white;
+    background: #E63946;
+    color: #fff;
     font-weight: bold;
 }
 
 .dishGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     justify-items: center;
 }
 
 .dishCard {
-    background-color: white;
+    width: 200px;
+    height: 320px;
+    margin-bottom: 2rem;
+    background: #fff;
     padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dishCard:hover {
+    transform: rotateX(5deg) translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
 .dishImage {
-    width: 150px; 
-    height: 150px;
-    object-fit: contain; 
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
     margin-bottom: 1rem;
+    flex-shrink: 0;
 }
 
 .dishName {
     font-size: 1.2rem;
     margin: 0.5rem 0;
-    color: #000; 
+    color: black;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .dishPrice {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #000;
+    color: black;
     margin-bottom: 1rem;
 }
 
 .addToCartButton {
-    background-color: #E63946; 
-    color: white;
+    background: #E63946;
+    color: #fff;
     border: none;
     padding: 0.6rem 1rem;
-    border-radius: 5px;
+    border-radius: 50px;
     font-size: 1rem;
     cursor: pointer;
     width: 90%;
+    max-width: 200px;
+    transition: all 0.3s;
+}
+
+.addToCartButton:hover {
+    background: #D62828;
+    transform: scale(1.05);
 }
 
 .noResults {
-    grid-column: 1 / -1; 
+    grid-column: 1 / -1;
     text-align: center;
     font-size: 1.5rem;
     color: #555;
     padding: 2rem;
 }
 
-/* --- 5. Footer do Menu --- */
 .menuFooter {
-    background-color: #F5CE63;
-    padding: 0.5rem; 
+    background: #F5CE63;
+    padding-top: 4rem;
     width: 100%;
-    box-sizing: border-box;
+    margin-top: auto;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }

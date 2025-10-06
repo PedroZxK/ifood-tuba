@@ -1,58 +1,71 @@
-/* src/components/Navbar/Navbar.module.css */
-
 .navbar {
-  /* Mantém a estrutura de layout e padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 4rem; /* Aumenta o padding lateral para afastar das bordas */
-  color: #000;
-  position: absolute; /* Fixa a Navbar no topo do HeroSection */
-  top: 0;
-  left: 0;
+  padding: 1rem;
+  margin-left: -2rem;
+  position: fixed;
   width: 100%;
-  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
-  z-index: 10; /* Garante que fique acima de outros elementos */
+  z-index: 100;
+  background: rgba(255, 238, 175, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
   display: flex;
   align-items: center;
-  /* Ocupa o mínimo de espaço necessário */
+  gap: 0.5rem;
+  margin-left: 2rem;
+  cursor: pointer;
+  animation: bounce 2s infinite;
 }
 
 .logoImage {
-  /* Ajusta o tamanho da imagem da logo */
-  width: 45px; 
-  height: 45px;
-  margin-right: 0.5rem;
+  width: 50px;
+  height: 50px;
 }
 
 .logoText {
   font-family: 'HYWenHei';
-  /* Remove a largura fixa */
-  width: auto; 
-  color: black;
-  font-size: 1.2rem; /* Levemente maior e mais visível */
   font-weight: bold;
+  font-size: 1.3rem;
+  color: black;
 }
 
 .navLinks {
-  /* Remove a largura fixa */
-  width: auto; 
-  list-style: none;
   display: flex;
-  /* Ajusta o espaçamento entre os links */
-  justify-content: flex-end; 
-  gap: 3rem; /* Aumenta o espaço entre os links */
+  gap: 2.5rem;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.navLinks a {
-  text-decoration: none;
-  color: #000;
-  font-size: 1.1rem; /* Ajusta o tamanho da fonte */
-  font-weight: bold;
+.navLinks li {
+  display: inline-block;
+}
+
+.navItem {
   font-family: 'HYWenHei';
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.navItem:hover {
+  transform: scale(1.1);
+  color: #F5CE63;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
 }

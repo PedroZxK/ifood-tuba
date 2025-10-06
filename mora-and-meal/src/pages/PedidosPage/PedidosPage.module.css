@@ -1,31 +1,22 @@
-/* src/pages/PedidosPage/PedidosPage.module.css */
-
 .pedidosContainer {
     min-height: 100vh;
     background-image: url('/lancheoverlay.png');
-    position: relative; /* Necessário para posicionar o ::before */
-    overflow: hidden; /* Garante que o overlay não cause scroll */
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 3rem;
 }
 
-/* Ajustes de z-index para que a Navbar e o conteúdo fiquem acima do overlay */
-.navbar {
-    /* ... (outros estilos) ... */
-    z-index: 1; 
-}
-
-.mainContent {
-    /* ... (outros estilos) ... */
-    z-index: 1; 
-}
-
-/* --- Navbar (Copiado do MenuPage) --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 4rem;
-    background-color: #F5CE63;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(245, 206, 99, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 15px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .logoArea a {
@@ -36,14 +27,14 @@
 }
 
 .logoImage {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 0.5rem;
 }
 
 .logoText {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
     font-family: 'HYWenHei', Arial, sans-serif;
 }
@@ -51,11 +42,11 @@
 .searchBar {
     display: flex;
     align-items: center;
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: #fff;
     border-radius: 50px;
     padding: 0.5rem 1rem;
-    width: 400px;
+    width: 300px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .searchIcon {
@@ -68,12 +59,9 @@
     border: none;
     outline: none;
     flex-grow: 1;
+    background-color: transparent;
     font-size: 1rem;
-    background-color: transparent; 
     color: #000;
-}
-.searchInput::placeholder {
-    color: #555;
 }
 
 .userIcons {
@@ -82,97 +70,95 @@
 }
 
 .navIcon {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
+    transition: transform 0.3s;
 }
-/* --- Fim Navbar --- */
 
+.navIcon:hover {
+    transform: scale(1.15);
+}
 
 .mainContent {
-    padding: 2rem 4rem;
+    padding: 3rem 4rem;
 }
 
 .pageTitle {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #000;
-    margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
 }
 
 .gridContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    grid-template-columns: 1fr 1fr;
     gap: 3rem;
+    align-items: start;
 }
 
-/* --- Detalhes do Pedido (Coluna Esquerda) --- */
-.orderDetailsBox {
-    background-color: white;
+.orderDetailsBox,
+.paymentBox {
+    background-color: #fff;
     padding: 2rem;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    height: fit-content;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.orderDetailsBox:hover,
+.paymentBox:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .header {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
 .headerIcon {
-    width: 50px;
+    width: 55px;
+    height: 55px;
 }
 
 .headerTitle {
     font-size: 1.8rem;
+    font-weight: bold;
     color: #000;
 }
 
 .orderList {
     flex-grow: 1;
-    padding: 0 1rem;
-    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .orderItem {
     display: flex;
     justify-content: space-between;
-    padding: 0.75rem 0;
-    border-bottom: 1px dashed #ccc;
-}
-
-.orderItem:last-child {
-    border-bottom: none;
-}
-
-.itemName, .itemPrice {
-    font-size: 1rem;
-    color: #000;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background-color: #FFFAE3;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .totalBox {
-    background-color: #FFEEAF; /* Cor do fundo do valor total */
-    padding: 1rem;
-    border-radius: 10px;
+    background-color: #FFEEAF;
+    padding: 1.25rem;
+    border-radius: 12px;
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
     color: #000;
-}
-
-/* --- Formas de Pagamento (Coluna Direita) --- */
-.paymentBox {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
 }
 
 .paymentOptions {
@@ -183,24 +169,30 @@
 }
 
 .optionBox {
-    background-color: #FFEEAF; /* Cor de fundo das opções */
+    background-color: #FFFAE3;
     padding: 1rem;
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: border 0.2s;
+    transition: all 0.3s;
+}
+
+.optionBox:hover {
+    border-color: #F5CE63;
+    transform: translateY(-2px);
 }
 
 .selectedOption {
-    border: 2px solid #F5CE63; /* Borda destacada para a opção selecionada */
+    border-color: #F5CE63;
+    background-color: #FFF5C1;
 }
 
 .checkbox {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border: 2px solid #000;
     border-radius: 50%;
     display: flex;
@@ -211,38 +203,54 @@
 }
 
 .checked {
-    width: 10px;
-    height: 10px;
-    background-color: #F5CE63; /* Cor do checkmark */
+    width: 12px;
+    height: 12px;
+    background-color: #F5CE63;
     border-radius: 50%;
 }
 
 .optionText {
     flex-grow: 1;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #000;
 }
 
 .optionIcon {
-    width: 40px;
+    width: 45px;
     margin-left: 1rem;
-    flex-shrink: 0;
 }
 
 .payButtonBox {
-    background-color: #FFEEAF; /* Cor do fundo do botão pagar */
-    padding: 1rem;
-    border-radius: 10px;
     text-align: center;
 }
 
 .payButton {
-    width: 80%;
-    background-color: #E63946; /* Vermelho */
-    color: white;
+    width: 90%;
+    background-color: #E63946;
+    color: #fff;
     border: none;
-    padding: 0.75rem 0;
-    border-radius: 5px;
-    font-size: 1.2rem;
+    padding: 0.85rem 0;
+    border-radius: 8px;
+    font-size: 1.25rem;
     cursor: pointer;
+    transition: all 0.3s;
+}
+
+.payButton:hover {
+    background-color: #D62839;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+    .gridContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .searchBar {
+        width: 200px;
+    }
+
+    .pageTitle {
+        font-size: 2.2rem;
+    }
 }

@@ -4,17 +4,62 @@
   align-items: center;
   padding: 4rem 2rem;
   background-color: #FFEEAF;
+  gap: 3rem;
 }
 
 .leftImage {
   flex: 1;
-  display: flex;
-  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
 }
 
 .leftImage img {
   width: 100%;
   max-width: 600px;
+  object-fit: cover;
+  display: block;
+}
+
+.leftImage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFEEAF;
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 1) 70%);
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  pointer-events: none;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .rightContent {
@@ -31,7 +76,8 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.5rem;
+  line-height: 1.3;
 }
 
 .underline {
@@ -39,14 +85,16 @@
 }
 
 .escoffierImage {
-  width: 60px;
+  width: 70px;
 }
 
 .description {
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  opacity: 0.95;
 }
 
 .finalText {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-style: italic;
 }
