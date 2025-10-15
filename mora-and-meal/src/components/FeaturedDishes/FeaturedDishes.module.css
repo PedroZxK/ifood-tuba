@@ -22,7 +22,7 @@
 }
 
 .kleeImage {
-  width: 60px;
+  width: 20%;
 }
 
 .title {
@@ -40,6 +40,11 @@
   align-items: center;
   gap: 1.5rem;
   transition: transform 0.3s ease;
+}
+
+.dishItem p {
+  font-size: 1.5rem;
+  flex: 1;
 }
 
 .dishItem:hover {

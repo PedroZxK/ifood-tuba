@@ -85,16 +85,16 @@
 }
 
 .escoffierImage {
-  width: 70px;
+  width: 20%;
 }
 
 .description {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   line-height: 1.7;
   opacity: 0.95;
 }
 
 .finalText {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-style: italic;
 }

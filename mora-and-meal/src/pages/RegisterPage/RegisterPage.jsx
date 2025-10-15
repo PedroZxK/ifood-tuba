@@ -1,8 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './RegisterPage.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { auth, db } from '../../firebase/config';
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 const RegisterPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userType, setUserType] = useState('cliente');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    if (password !== confirmPassword) {
+      setError('As senhas não coincidem.');
+      return;
+    }
+    if (!name || !email || !password) {
+      setError('Todos os campos são obrigatórios.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // 2. Crie o usuário no Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 3. Salve os dados do usuário no Firestore
+      // 'users' é o nome da coleção. O ID do documento será o UID do usuário
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name, // o nome vindo do estado
+        email, // o email vindo do estado
+        role: userType, // o tipo de usuário (cliente, restaurante, entregador)
+        createdAt: serverTimestamp(), // adiciona a data de criação
+        emailVerified: user.emailVerified, // salva o status inicial de verificação do email
+      });
+
+      // 4. Envie o e-mail de verificação
+      await sendEmailVerification(user);
+
+      setSuccess('Cadastro realizado com sucesso! Um e-mail de verificação foi enviado. Redirecionando...');
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
+
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        setError('Este e-mail já está em uso.');
+      } else if (error.code === 'auth/invalid-email') {
+        setError('O formato do e-mail é inválido.');
+      } else if (error.code === 'auth/weak-password') {
+        setError('A senha deve ter no mínimo 6 caracteres.');
+      } else {
+        setError('Ocorreu um erro ao realizar o cadastro. Tente novamente.');
+        console.error("Erro no cadastro:", error); // Log do erro para debug
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={`${styles.container} ${styles.pageRoot}`}>
       <div className={styles.backButtonContainer}>
@@ -10,30 +79,39 @@ const RegisterPage = () => {
           src="/seta.png"
           alt="Voltar"
           className={styles.backButton}
-          onClick={() => window.location.href = '/'}
+          onClick={() => navigate('/')}
         />
       </div>
       <div className={styles.formContainer}>
-        <div className={styles.registerBox}>
+        <form className={styles.registerBox} onSubmit={handleRegister}>
           <h2 className={`bold-text ${styles.title}`}>Registre-se</h2>
 
+          {error && <p className={styles.errorMessage}>{error}</p>}
+          {success && <p className={styles.successMessage}>{success}</p>}
+
           <div className={styles.inputGroup}>
-            <input type="email" placeholder="Email" className={styles.inputField} />
+            <input type="text" placeholder="Nome Completo ou Nome do Restaurante" className={styles.inputField} value={name} onChange={(e) => setName(e.target.value)} disabled={loading} />
           </div>
           <div className={styles.inputGroup}>
-            <input type="password" placeholder="Senha" className={styles.inputField} />
+            <input type="email" placeholder="Email" className={styles.inputField} value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />
           </div>
           <div className={styles.inputGroup}>
-            <input type="password" placeholder="Confirmar Senha" className={styles.inputField} />
+            <input type="password" placeholder="Senha" className={styles.inputField} value={password} onChange={(e) => setPassword(e.target.value)} disabled={loading} />
           </div>
           <div className={styles.inputGroup}>
-            <input type="text" placeholder="Nome" className={styles.inputField} />
+            <input type="password" placeholder="Confirmar Senha" className={styles.inputField} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} disabled={loading} />
+          </div>
+          <div className={styles.inputGroup}>
+            <select className={styles.inputField} value={userType} onChange={(e) => setUserType(e.target.value)} disabled={loading}>
+              <option value="cliente">Sou um Cliente</option>
+              <option value="restaurante">Sou um Restaurante</option>
+              <option value="entregador">Sou um Entregador</option>
+            </select>
           </div>
 
-          <button className={`${styles.submitButton} bold-text`} onClick={() => window.location.href = '/login'}>
-            Registrar
+          <button type="submit" className={`${styles.submitButton} bold-text`} disabled={loading}>
+            {loading ? 'Registrando...' : 'Registrar'}
           </button>
-
 
           <p className={styles.loginLink}>
             Já tem uma conta?{" "}
@@ -41,7 +119,7 @@ const RegisterPage = () => {
               Entre agora!
             </Link>
           </p>
-        </div>
+        </form>
       </div>
 
       <div className={styles.imageContainer}>

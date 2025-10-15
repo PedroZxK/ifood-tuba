@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import styles from './MenuPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthHook'; // 1. Importe o useAuth
 
 const DISHES = [
   { name: "Swirling Steps", price: 75.00, image: "/prato1.png" },
@@ -29,6 +30,7 @@ const MenuPage = () => {
   const [activeFilter, setActiveFilter] = useState("Mais Procurados");
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const filteredDishes = useMemo(() => {
     let list = [...DISHES];
@@ -64,13 +66,20 @@ const MenuPage = () => {
             onChange={e => setSearchTerm(e.target.value)}
           />
         </div>
+
         <div className={styles.userIcons}>
           <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
           <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
           <img src="/notificacao.png" alt="Notificação" className={styles.navIcon} />
-          <Link to="/">
-            <img src="/porta.png" alt="Sair" className={styles.navIcon} />
-          </Link>
+
+          {/* CORREÇÃO APLICADA AQUI */}
+          <img
+            src="/porta.png"
+            alt="Sair"
+            className={styles.navIcon}
+            onClick={logout} // Adicionado o onClick para chamar a função
+            style={{ cursor: 'pointer' }}
+          />
         </div>
       </nav>
 
