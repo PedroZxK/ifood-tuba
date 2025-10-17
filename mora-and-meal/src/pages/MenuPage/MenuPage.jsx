@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import styles from './MenuPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthHook'; // 1. Importe o useAuth
+import { useAuth } from '../../contexts/AuthHook';
+import { useCart } from '../../hooks/useCart';
 
 const DISHES = [
   { name: "Swirling Steps", price: 75.00, image: "/prato1.png" },
@@ -31,6 +32,7 @@ const MenuPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const { addToCart } = useCart(); // 2. Use o hook do carrinho
 
   const filteredDishes = useMemo(() => {
     let list = [...DISHES];
@@ -68,16 +70,19 @@ const MenuPage = () => {
         </div>
 
         <div className={styles.userIcons}>
-          <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
-          <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
+          <Link to="/cart">
+            <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
+          </Link>
+          <Link to="/profile">
+            <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
+          </Link>
           <img src="/notificacao.png" alt="Notificação" className={styles.navIcon} />
 
-          {/* CORREÇÃO APLICADA AQUI */}
           <img
             src="/porta.png"
             alt="Sair"
             className={styles.navIcon}
-            onClick={logout} // Adicionado o onClick para chamar a função
+            onClick={logout}
             style={{ cursor: 'pointer' }}
           />
         </div>
@@ -138,7 +143,8 @@ const MenuPage = () => {
               <img src={dish.image} alt={dish.name} className={styles.dishImage} />
               <p className={`${styles.dishName} bold-text`}>{dish.name}</p>
               <p className={styles.dishPrice}>R$ {dish.price.toFixed(2).replace('.', ',')}</p>
-              <button className={styles.addToCartButton}>Adicionar</button>
+              {/* 3. Adicione o onClick ao botão */}
+              <button onClick={() => addToCart(dish)} className={styles.addToCartButton}>Adicionar</button>
             </div>
           ))}
           {filteredDishes.length === 0 && (

@@ -16,6 +16,7 @@ import PedidosPage from './pages/PedidosPage/PedidosPage';
 import OrderSuccessPage from './pages/OrderSuccessPage/OrderSuccessPage';
 import PhoneVerificationPage from './pages/PhoneVerificationPage/PhoneVerificationPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
+import CartPage from './pages/CartPage/CartPage';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
@@ -58,10 +59,10 @@ function App() {
           } 
         />
         <Route 
-          path="/pedidos" 
+          path="/cart" 
           element={
             <ProtectedRoute>
-              <PedidosPage />
+              <CartPage />
             </ProtectedRoute>
           } 
         />
