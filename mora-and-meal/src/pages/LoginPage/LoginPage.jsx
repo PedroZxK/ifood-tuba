@@ -30,7 +30,6 @@ const LoginPage = () => {
       const userDocRef = doc(db, 'users', user.uid);
       const userDoc = await getDoc(userDocRef);
 
-      // Atualiza o Firestore apenas se o status lá for 'false'
       if (userDoc.exists() && !userDoc.data().emailVerified) {
         await updateDoc(userDocRef, {
           emailVerified: true
@@ -61,6 +60,10 @@ const LoginPage = () => {
             onClick={() => navigate('/')}
             />
         </div>
+                <div className={styles.imageContainer}>
+            <img src="/xianLogin.png" alt="Xiangling Entregando Comida" className={styles.xianImage} />
+            <div className={styles.imageOverlay}></div>
+        </div>
         <div className={styles.formContainer}>
             <form className={styles.loginBox} onSubmit={handleLogin}>
                 <h2 className={`bold-text ${styles.title}`}>Entre</h2>
@@ -81,15 +84,11 @@ const LoginPage = () => {
                 </button>
                 <p className={styles.registerLink}>
                     Não tem uma conta?{" "}
-                    <Link to="/register" className={styles.registerAnchor}>
+                    <Link to="/cadastro " className={styles.registerAnchor}>
                         Registre-se agora!
                     </Link>
                 </p>
             </form>
-        </div>
-        <div className={styles.imageContainer}>
-            <img src="/xianLogin.png" alt="Xiangling Entregando Comida" className={styles.xianImage} />
-            <div className={styles.imageOverlay}></div>
         </div>
     </div>
   );

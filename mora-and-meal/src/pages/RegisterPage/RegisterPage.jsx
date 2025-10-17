@@ -33,22 +33,18 @@ const RegisterPage = () => {
     setLoading(true);
 
     try {
-      // 2. Crie o usuário no Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // 3. Salve os dados do usuário no Firestore
-      // 'users' é o nome da coleção. O ID do documento será o UID do usuário
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
-        name, // o nome vindo do estado
-        email, // o email vindo do estado
-        role: userType, // o tipo de usuário (cliente, restaurante, entregador)
-        createdAt: serverTimestamp(), // adiciona a data de criação
-        emailVerified: user.emailVerified, // salva o status inicial de verificação do email
+        name,
+        email,
+        role: userType, 
+        createdAt: serverTimestamp(),
+        emailVerified: user.emailVerified,
       });
 
-      // 4. Envie o e-mail de verificação
       await sendEmailVerification(user);
 
       setSuccess('Cadastro realizado com sucesso! Um e-mail de verificação foi enviado. Redirecionando...');
@@ -65,7 +61,7 @@ const RegisterPage = () => {
         setError('A senha deve ter no mínimo 6 caracteres.');
       } else {
         setError('Ocorreu um erro ao realizar o cadastro. Tente novamente.');
-        console.error("Erro no cadastro:", error); // Log do erro para debug
+        console.error("Erro no cadastro:", error);
       }
     } finally {
       setLoading(false);
@@ -90,7 +86,7 @@ const RegisterPage = () => {
           {success && <p className={styles.successMessage}>{success}</p>}
 
           <div className={styles.inputGroup}>
-            <input type="text" placeholder="Nome Completo ou Nome do Restaurante" className={styles.inputField} value={name} onChange={(e) => setName(e.target.value)} disabled={loading} />
+            <input type="text" placeholder="Nome Completo" className={styles.inputField} value={name} onChange={(e) => setName(e.target.value)} disabled={loading} />
           </div>
           <div className={styles.inputGroup}>
             <input type="email" placeholder="Email" className={styles.inputField} value={email} onChange={(e) => setEmail(e.target.value)} disabled={loading} />

@@ -1,14 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './HeroSection.module.css';
 
-export default function HeroSection() {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/menu");
-  };
-
+const HeroSection = () => {
   return (
     <section className={styles.heroSection}>
       <div className={styles.overlay}>
@@ -17,11 +10,11 @@ export default function HeroSection() {
         </h1>
         <div className={styles.ctaContainer}>
           <img src="/guoba.png" alt="Guoba" className={styles.guobaImage} />
-          <button className={styles.ctaButton} onClick={handleClick}>
-            Peça Aqui!
-          </button>
+          <button className={styles.ctaButton}>Peça Aqui!</button>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default HeroSection;
