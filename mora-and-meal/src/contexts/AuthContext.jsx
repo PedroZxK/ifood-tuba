@@ -1,93 +1,110 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../firebase/config'; // Assumindo que este caminho está correto
+import { doc, updateDoc, getDoc, onSnapshot } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
-// Cria o contexto
 export const AuthContext = createContext();
 
-// Cria o provedor do contexto
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // Contém os dados de perfil do Firestore
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  // Estado para armazenar o UID do Firebase Auth
+  const [firebaseUser, setFirebaseUser] = useState(null);
 
-  // Efeito para carregar o usuário do localStorage ao iniciar a aplicação
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    // Listener do Firebase Auth: Rastreia o estado de autenticação
+    const unsubscribeAuth = onAuthStateChanged(auth, async (userAuth) => {
+      setFirebaseUser(userAuth);
+
+      if (userAuth) {
+        // Se autenticado, carrega ou escuta o perfil do Firestore
+        const userDocRef = doc(db, 'users', userAuth.uid);
+
+        // Listener do Firestore: Garante que o estado 'user' reflita o banco de dados em tempo real
+        const unsubscribeFirestore = onSnapshot(userDocRef, (docSnapshot) => {
+          if (docSnapshot.exists()) {
+            // Os dados de perfil (name, avatar, etc.) vêm do Firestore
+            const profileData = docSnapshot.data();
+            setUser({
+              uid: userAuth.uid,
+              email: userAuth.email,
+              ...profileData,
+              // Não inclua a senha!
+            });
+          } else {
+            // Usuário logado no Auth, mas sem perfil (erro no registro)
+            setUser(null);
+            auth.signOut();
+          }
+          setLoading(false);
+        }, (error) => {
+          console.error("Erro ao carregar dados do Firestore:", error);
+          setLoading(false);
+        });
+
+        // Cleanup para o listener do Firestore quando o componente desmonta ou o userAuth muda
+        return () => unsubscribeFirestore();
+      } else {
+        // Não autenticado
+        setUser(null);
+        setLoading(false);
+      }
+    });
+
+    // Cleanup para o listener do Auth
+    return () => unsubscribeAuth();
   }, []);
 
-  // Função de Registro
-  const register = (name, email, password) => {
-    // 1. Pega os usuários existentes do localStorage ou cria um array vazio
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-
-    // 2. Verifica se o email já está em uso
-    const userExists = users.find(u => u.email === email);
-    if (userExists) {
-      return { success: false, message: 'Este email já está cadastrado.' };
-    }
-
-    // 3. Cria o novo usuário
-    const newUser = { name, email, password }; // Em um app real, a senha deveria ser "hasheada"
-    users.push(newUser);
-
-    // 4. Salva o array atualizado de usuários no localStorage
-    localStorage.setItem('users', JSON.stringify(users));
-
-    return { success: true };
+  // Login: Apenas um wrapper para forçar a navegação após o login ser bem-sucedido
+  // O carregamento real dos dados é feito pelo useEffect/onAuthStateChanged
+  const login = (email, password) => {
+    // Não precisa de lógica de localStorage aqui, o LoginPage já lida com a autenticação
+    // e o useEffect acima lida com o estado.
   };
 
-  // Função de Login
-const login = (email, password) => {
-    // 1. Pega os usuários cadastrados do localStorage
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // 2. Procura pelo usuário com o email fornecido (ESTA LINHA ESTAVA FALTANDO)
-    const foundUser = users.find(u => u.email === email);
-
-    // 3. Valida o usuário e a senha
-    if (!foundUser) {
-      return { success: false, message: 'Email não encontrado.' };
-    }
-
-    if (foundUser.password !== password) { 
-      return { success: false, message: 'Senha incorreta.' };
-    }
-    
-    // 4. Se tudo estiver correto, salva o usuário no estado e no localStorage
-    const userData = { name: foundUser.name, email: foundUser.email };
-    localStorage.setItem('user', JSON.stringify(userData));
-    setUser(userData);
-    
-    // 5. Redireciona para a página de menu
-    navigate('/menu');
-
-    return { success: true };
-  };
-
-  // Função de Logout
-  const logout = () => {
-    localStorage.removeItem('user');
+  const logout = async () => {
+    await auth.signOut();
     setUser(null);
+    setFirebaseUser(null);
     navigate('/login');
   };
 
-  // O valor fornecido pelo contexto
-  const value = {
-    isAuthenticated: !!user,
-    user,
-    login,
-    register,
-    logout,
-    loading
+  // 💡 FUNÇÃO DE ATUALIZAÇÃO QUE SALVA NO FIRESTORE (Passo Crítico)
+  const updateUser = async (updatedData) => {
+    if (!firebaseUser) {
+      console.error("Usuário não logado para atualização.");
+      return;
+    }
+
+    // 1. Prepara os dados para o Firestore
+    const dataToUpdate = { ...updatedData };
+
+    // 2. Lógica para a senha (deve ser tratada separadamente pelo Firebase Auth)
+    if (dataToUpdate.password) {
+      // OBS: A alteração de senha deve usar updatePassword(user, novaSenha) do Firebase Auth
+      // Vamos ignorar a senha aqui, pois ela não fica no Firestore.
+      delete dataToUpdate.password;
+    }
+
+    try {
+      const userDocRef = doc(db, 'users', firebaseUser.uid);
+
+      // 3. Salva os novos dados no Firestore (nome e avatar)
+      await updateDoc(userDocRef, dataToUpdate);
+
+      // O onSnapshot no useEffect irá automaticamente atualizar o estado 'user' na aplicação.
+
+    } catch (error) {
+      console.error("Erro ao atualizar perfil no Firestore:", error);
+      throw new Error('Falha ao salvar o perfil.');
+    }
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, login, logout, updateUser, isAuthenticated: !!user, loading }}>
+      {children}
     </AuthContext.Provider>
   );
 };

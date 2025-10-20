@@ -4,7 +4,6 @@ import styles from './CartPage.module.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthHook';
 
-// 1. Importe os componentes Navbar e Footer
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 
@@ -80,7 +79,7 @@ const CartPage = () => {
                 )}
             </div>
 
-            {/* 3. Adicione o componente Footer na base da página */}
+            {}
             <Footer />
         </>
     );

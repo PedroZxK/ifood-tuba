@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthHook'; // Ajuste o caminho se necessário
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase/config';
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Se ainda estiver verificando a autenticação, pode-se mostrar um loader
+  useEffect(() => {
+    // Escuta mudanças no estado de autenticação do Firebase
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   if (loading) {
-    return <div>Carregando...</div>; 
+    return <div>Carregando...</div>;
   }
 
-  // Se não estiver autenticado, redireciona para a página de login
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // Se estiver autenticado, renderiza o componente filho (a página protegida)
   return children;
 };
 

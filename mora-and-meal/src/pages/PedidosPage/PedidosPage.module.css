@@ -225,11 +225,11 @@
 }
 
 .payButton {
-    width: 90%;
+    width: 100%;
     background-color: #E63946;
     color: #fff;
     border: none;
-    padding: 0.85rem 0;
+    padding: 1rem 2rem;
     border-radius: 8px;
     font-size: 1.25rem;
     cursor: pointer;
@@ -239,6 +239,7 @@
 .payButton:hover {
     background-color: #D62839;
     transform: translateY(-2px);
+    color: white;
 }
 
 @media (max-width: 1024px) {

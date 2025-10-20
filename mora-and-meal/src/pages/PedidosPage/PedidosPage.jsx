@@ -1,25 +1,26 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from '../../hooks/useCart';
+import { useAuth } from '../../contexts/AuthHook';
 import styles from './PedidosPage.module.css';
-import { Link, useNavigate } from 'react-router-dom';
-
-const DUMMY_CART = [
-  { id: 1, name: "Swirling Steps", price: 75.00, qty: 1 },
-  { id: 2, name: "Fukuuchi Udon", price: 80.00, qty: 2 },
-  { id: 3, name: "Fish-Flavored Toast", price: 25.00, qty: 3 },
-];
 
 const PedidosPage = () => {
+  const { cartItems, clearCart } = useCart(); // Pega os itens reais do carrinho
   const [selectedPayment, setSelectedPayment] = useState('Cartão de Crédito');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const total = useMemo(() => {
-    return DUMMY_CART.reduce((sum, item) => sum + item.price * item.qty, 0);
-  }, []);
+    return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }, [cartItems]);
 
-  const handlePayment = () => {
-    alert(`Pagamento de R$ ${total.toFixed(2).replace('.', ',')} efetuado com sucesso usando: ${selectedPayment}!`);
-    navigate('/pedido-concluido');
-  };
+  // const handlePayment = () => {
+  //   if (cartItems.length === 0) return alert('Seu carrinho está vazio 😢');
+
+  //   alert(`Pagamento de R$ ${total.toFixed(2).replace('.', ',')} efetuado com sucesso usando: ${selectedPayment}!`);
+  //   clearCart(); // Limpa o carrinho após finalizar
+  //   navigate('/pedido-concluido');
+  // };
 
   const MenuNavbar = () => (
     <nav className={styles.navbar}>
@@ -34,12 +35,14 @@ const PedidosPage = () => {
         <input type="text" placeholder="Buscar" className={styles.searchInput} />
       </div>
       <div className={styles.userIcons}>
-        <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
-        <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
-        <img src="/notificacao.png" alt="Notificação" className={styles.navIcon} />
-        <Link to="/">
-          <img src="/porta.png" alt="Sair" className={styles.navIcon} />
+        <Link to="/cart">
+          <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
         </Link>
+        <Link to="/profile">
+          <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
+        </Link>
+        <img src="/notificacao.png" alt="Notificação" className={styles.navIcon} />
+        <img src="/porta.png" alt="Sair" className={styles.navIcon} onClick={logout} />
       </div>
     </nav>
   );
@@ -51,26 +54,32 @@ const PedidosPage = () => {
         <h1 className={`${styles.pageTitle} bold-text`}>Seus Pedidos</h1>
 
         <div className={styles.gridContainer}>
-          { }
+          {/* Resumo do Pedido */}
           <div className={styles.orderDetailsBox}>
             <div className={styles.header}>
               <img src="/xianmascote.png" alt="Mascote Xiangling" className={styles.headerIcon} />
               <h2 className={`bold-text ${styles.headerTitle}`}>Resumo do Pedido</h2>
             </div>
+
             <div className={styles.orderList}>
-              {DUMMY_CART.map(item => (
-                <div key={item.id} className={styles.orderItem}>
-                  <p className={styles.itemName}>{item.name} (x{item.qty})</p>
-                  <p className={styles.itemPrice}>R$ {(item.price * item.qty).toFixed(2).replace('.', ',')}</p>
-                </div>
-              ))}
+              {cartItems.length === 0 ? (
+                <p style={{ textAlign: 'center', color: '#555' }}>Seu carrinho está vazio 😢</p>
+              ) : (
+                cartItems.map(item => (
+                  <div key={item.name} className={styles.orderItem}>
+                    <p className={styles.itemName}>{item.name} (x{item.quantity})</p>
+                    <p className={styles.itemPrice}>R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}</p>
+                  </div>
+                ))
+              )}
             </div>
+
             <div className={styles.totalBox}>
               <span className={styles.totalText}>Total: R$ {total.toFixed(2).replace('.', ',')}</span>
             </div>
           </div>
 
-          { }
+          {/* Forma de Pagamento */}
           <div className={styles.paymentBox}>
             <div className={styles.header}>
               <img src="/escoffiermascote.png" alt="Escoffier Mascote" className={styles.headerIcon} />
@@ -82,7 +91,7 @@ const PedidosPage = () => {
                 { name: 'Cartão de Crédito', img: '/cartao.png' },
                 { name: 'Pix', img: '/pix.png' },
                 { name: 'Dinheiro', img: '/dinheiro.png' }
-              ].map((option) => (
+              ].map(option => (
                 <div
                   key={option.name}
                   className={`${styles.optionBox} ${selectedPayment === option.name ? styles.selectedOption : ''}`}
@@ -92,20 +101,27 @@ const PedidosPage = () => {
                     <div className={selectedPayment === option.name ? styles.checked : ''}></div>
                   </div>
                   <span className={styles.optionText}>{option.name}</span>
-                  <img
-                    src={option.img}
-                    alt={option.name}
-                    className={styles.optionIcon}
-                  />
+                  <img src={option.img} alt={option.name} className={styles.optionIcon} />
                 </div>
               ))}
             </div>
 
-
             <div className={styles.payButtonBox}>
-              <button onClick={handlePayment} className={`${styles.payButton} bold-text`}>
+              <Link
+                to="/pedido-concluido"
+                className={`${styles.payButton} bold-text`}
+                onClick={(e) => {
+                  if (cartItems.length === 0) {
+                    e.preventDefault(); // Impede o redirecionamento
+                    alert('Seu carrinho está vazio 😢');
+                    return;
+                  }
+                  alert(`Pagamento de R$ ${total.toFixed(2).replace('.', ',')} efetuado com sucesso usando: ${selectedPayment}!`);
+                  clearCart(); // Limpa o carrinho após finalizar
+                }}
+              >
                 Pagar Agora
-              </button>
+              </Link>
             </div>
           </div>
         </div>

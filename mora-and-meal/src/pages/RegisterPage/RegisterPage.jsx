@@ -40,9 +40,12 @@ const RegisterPage = () => {
         uid: user.uid,
         name,
         email,
-        role: userType, 
+        role: userType,
         createdAt: serverTimestamp(),
         emailVerified: user.emailVerified,
+        // 💡 ADICIONAR CAMPOS INICIAIS IMPORTANTES
+        avatar: '/default-avatar.png', // URL/Caminho padrão
+        lastLogin: serverTimestamp(),
       });
 
       await sendEmailVerification(user);
