@@ -3,7 +3,6 @@ import styles from './MenuPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthHook';
 import { useCart } from '../../hooks/useCart';
-
 import Footer from '../../components/Footer/Footer';
 
 const DISHES = [
@@ -32,38 +31,28 @@ const FILTERS = ["Mais Procurados", "Preço Crescente", "Preço Decrescente"];
 const MenuPage = () => {
     const [activeFilter, setActiveFilter] = useState("Mais Procurados");
     const [searchTerm, setSearchTerm] = useState("");
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
-    const { addToCart } = useCart();
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { cartItems, addToCart } = useCart();
+
+    const totalItemsInCart = useMemo(() => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    }, [cartItems]);
 
     const filteredDishes = useMemo(() => {
         let list = [...DISHES];
-
-        if (activeFilter === "Faixa de Preço") list = list.filter(d => d.price <= 100);
-        else if (activeFilter === "Rotas de Entrega") list = list.slice(0, 6);
-        else if (activeFilter === "Preço Crescente") list.sort((a, b) => a.price - b.price);
+        if (activeFilter === "Preço Crescente") list.sort((a, b) => a.price - b.price);
         else if (activeFilter === "Preço Decrescente") list.sort((a, b) => b.price - a.price);
-
         if (searchTerm.trim() !== "") {
             const term = searchTerm.toLowerCase();
             list = list.filter(d => d.name.toLowerCase().includes(term));
         }
-
         return list;
     }, [activeFilter, searchTerm]);
 
-    const handleLogoutConfirmation = () => {
-        const isConfirmed = window.confirm("Você tem certeza que deseja sair?");
-        if (isConfirmed) {
-            logout();
-            navigate('/login');
-        }
-    };
-
     return (
         <div className={styles.menuContainer}>
-            { }
             <nav className={styles.navbar}>
                 <Link to="/" className={styles.logo}>
                     <img src="/logo.png" alt="Mora & Meal Logo" className={styles.logoImage} />
@@ -80,28 +69,29 @@ const MenuPage = () => {
                     />
                 </div>
 
-                {/* BOTÃO HAMBÚRGUER */}
                 <button className={styles.hamburgerButton} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                    &#9776; {/* Símbolo do hambúrguer */}
+                    &#9776;
                 </button>
 
                 <div className={`${styles.userIcons} ${isMenuOpen ? styles.active : ''}`}>
-                    <Link to="/cart" className={styles.navLink}>
+                    <Link to="/cart" className={`${styles.navLink} ${styles.cartIconContainer}`}>
                         <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
+                        {totalItemsInCart > 0 && (
+                            <span className={styles.cartBadge}>{totalItemsInCart}</span>
+                        )}
                         <span className={styles.navLinkText}>Carrinho</span>
                     </Link>
                     <Link to="/profile" className={styles.navLink}>
                         <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
                         <span className={styles.navLinkText}>Perfil</span>
                     </Link>
-                    <div onClick={handleLogoutConfirmation} className={`${styles.navLink} ${styles.logoutButton}`}>
+                    <div onClick={logout} className={styles.navLink} style={{ cursor: 'pointer' }}>
                         <img src="/porta.png" alt="Sair" className={styles.navIcon} />
                         <span className={styles.navLinkText}>Sair</span>
                     </div>
                 </div>
             </nav>
 
-            { }
             <section className={styles.categoriesSection}>
                 {CATEGORIES.map(cat => (
                     <div key={cat.name} className={styles.categoryItem}>
@@ -113,7 +103,6 @@ const MenuPage = () => {
                 ))}
             </section>
 
-            { }
             <section className={styles.promotionSection}>
                 <div className={styles.promoContent}>
                     <h2 className={`${styles.promoTitle} bold-text`}>Promoções do Dia</h2>
@@ -131,7 +120,6 @@ const MenuPage = () => {
                 </div>
             </section>
 
-            { }
             <section className={styles.dishesSection}>
                 <h3 className={`${styles.filtersTitle} bold-text`}>Filtros</h3>
                 <div className={styles.filterBar}>
@@ -145,14 +133,12 @@ const MenuPage = () => {
                         </button>
                     ))}
                 </div>
-
                 <div className={styles.dishGrid}>
                     {filteredDishes.map((dish, idx) => (
                         <div key={idx} className={styles.dishCard}>
                             <img src={dish.image} alt={dish.name} className={styles.dishImage} />
                             <p className={`${styles.dishName} bold-text`}>{dish.name}</p>
                             <p className={styles.dishPrice}>R$ {dish.price.toFixed(2).replace('.', ',')}</p>
-                            {/* 3. Adicione o onClick ao botão */}
                             <button onClick={() => addToCart(dish)} className={styles.addToCartButton}>Adicionar</button>
                         </div>
                     ))}
@@ -162,7 +148,6 @@ const MenuPage = () => {
                 </div>
             </section>
 
-            { }
             <Footer />
         </div>
     );

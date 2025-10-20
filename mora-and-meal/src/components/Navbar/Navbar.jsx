@@ -2,22 +2,20 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import { useAuth } from '../../contexts/AuthHook';
-import { useCart } from '../../hooks/useCart'; // Importe o useCart
-import { useMemo } from 'react'; // Importe o useMemo
+import { useCart } from '../../hooks/useCart';
+import { useMemo } from 'react';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
-    // Pega os itens do carrinho para exibir o contador
     const { cartItems } = useCart();
 
     const totalItemsInCart = useMemo(() => {
         return cartItems.reduce((total, item) => total + item.quantity, 0);
     }, [cartItems]);
 
-    // Função que lida com a confirmação antes de deslogar
     const handleLogoutConfirmation = () => {
         const isConfirmed = window.confirm("Você tem certeza que deseja sair?");
         if (isConfirmed) {
@@ -57,7 +55,6 @@ const Navbar = () => {
                             <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
                             <span className={styles.mobileOnly}>Perfil</span>
                         </Link>
-                        {/* Atualiza o onClick para chamar a função de confirmação */}
                         <button onClick={handleLogoutConfirmation} className={`${styles.navLink} ${styles.logoutButton}`}>
                             <img src="/porta.png" alt="Sair" className={styles.navIcon} />
                             <span className={styles.mobileOnly}>Sair</span>
