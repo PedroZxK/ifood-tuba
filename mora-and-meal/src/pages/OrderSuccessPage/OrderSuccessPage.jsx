@@ -1,42 +1,14 @@
-// src/pages/OrderSuccessPage/OrderSuccessPage.jsx
-
 import React from 'react';
 import styles from './OrderSuccessPage.module.css';
 import { Link } from 'react-router-dom';
 
-const MenuNavbar = () => (
-  <nav className={styles.navbar}>
-    <div className={styles.logoArea}>
-      <Link to="/">
-        <img src="/logo.png" alt="Mora & Meal Logo" className={styles.logoImage} />
-        <span className={styles.logoText}>Mora & Meal</span>
-      </Link>
-    </div>
-    <div className={styles.searchBar}>
-      <img src="/lupa.png" alt="Buscar" className={styles.searchIcon} />
-      <input type="text" placeholder="Buscar" className={styles.searchInput} />
-    </div>
-    <div className={styles.userIcons}>
-      <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
-      <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
-      <img src="/notificacao.png" alt="Notificação" className={styles.navIcon} />
-      <Link to="/">
-        <img src="/porta.png" alt="Sair" className={styles.navIcon} />
-      </Link>
-    </div>
-  </nav>
-);
-
-const MenuFooter = () => (
-  <footer className={styles.menuFooter}>
-    <p>© 2025 Mora & Meal. Todos os direitos reservados.</p>
-  </footer>
-);
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 const OrderSuccessPage = () => {
   return (
     <div className={styles.successContainer}>
-      <MenuNavbar />
+      <Navbar />
 
       <main className={styles.mainContent}>
         <div className={styles.successBox}>
@@ -63,7 +35,7 @@ const OrderSuccessPage = () => {
         </div>
       </main>
 
-      <MenuFooter />
+      <Footer />
     </div>
   );
 };

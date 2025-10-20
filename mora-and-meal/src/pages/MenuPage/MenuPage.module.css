@@ -25,6 +25,7 @@
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
+    text-decoration: none;
     transition: transform 0.3s;
 }
 
@@ -93,6 +94,27 @@
     transform: scale(1.2) rotate(10deg);
 }
 
+.cartIconContainer {
+    position: relative;
+}
+
+.cartBadge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #E63946;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
 /* Categorias */
 .categoriesSection {
     display: flex;
@@ -139,10 +161,10 @@
 /* Promoção */
 .promotionSection {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
-    padding: 3rem 0;
+    gap: 1rem;
     flex-wrap: wrap-reverse;
 }
 
@@ -151,33 +173,10 @@
     max-width: 450px;
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
 }
 
 .promoTitle {
     font-size: 2.5rem;
-    text-align: center;
-    color: black;
-}
-
-.promoTextContainer {
-    position: relative;
-    width: 100%;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.promoImageText {
-    position: absolute;
-    width: 100%;
-}
-
-.promoDishText {
-    position: relative;
-    z-index: 2;
-    font-size: 1.3rem;
     text-align: center;
     color: black;
 }
@@ -192,7 +191,6 @@
 .promoDishImage {
     width: 100%;
     max-width: 500px;
-    margin-bottom: -20px;
     object-fit: contain;
     border-radius: 20px;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
@@ -206,7 +204,6 @@
 .peçaJaContainer {
     display: flex;
     justify-content: center;
-    margin-bottom: 3rem;
 }
 
 .promoButton {
@@ -225,10 +222,13 @@
     transform: scale(1.05);
 }
 
+/* Filtros e Pratos */
+.dishesSection {
+    padding: 2rem;
+}
+
 .filtersTitle {
     font-size: 2rem;
-    margin-bottom: 1rem;
-    margin-left: 2rem;
     color: black;
 }
 
@@ -243,7 +243,6 @@
     background: white;
     color: #888;
     border: none;
-    margin-left: 2rem;
     padding: 0.6rem 1.5rem;
     border-radius: 50px;
     cursor: pointer;
@@ -269,8 +268,8 @@
 }
 
 .dishCard {
-    width: 200px;
-    height: 320px;
+    width: 250px;
+    height: auto;
     margin-bottom: 2rem;
     background: #fff;
     padding: 1.5rem;
@@ -284,7 +283,7 @@
 }
 
 .dishCard:hover {
-    transform: rotateX(5deg) translateY(-8px);
+    transform: translateY(-8px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
@@ -301,7 +300,6 @@
     margin: 0.5rem 0;
     color: black;
     flex-grow: 1;
-    overflow: hidden;
 }
 
 .dishPrice {
@@ -337,11 +335,79 @@
     padding: 2rem;
 }
 
-.menuFooter {
-    background: #F5CE63;
-    padding-top: 4rem;
-    width: 100%;
-    margin-top: auto;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+/* Responsividade */
+.hamburgerButton {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: black;
+    z-index: 1001;
+}
+
+.navLinkText {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+
+    .searchBar {
+        display: none;
+    }
+
+    .hamburgerButton {
+        display: block;
+    }
+
+    .userIcons {
+        display: flex;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background: rgba(251, 219, 132, 0.95);
+        backdrop-filter: blur(5px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 6rem 2rem 2rem;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    .userIcons.active {
+        transform: translateX(0);
+    }
+
+    .navLink {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem 0;
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+
+    .navLinkText {
+        display: inline;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logoText {
+        display: none;
+    }
+
+    .navbar {
+        padding: 1rem;
+    }
 }

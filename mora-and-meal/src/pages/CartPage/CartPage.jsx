@@ -2,13 +2,11 @@ import React from 'react';
 import { useCart } from '../../hooks/useCart';
 import styles from './CartPage.module.css';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthHook';
 
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 
 const CartPage = () => {
-    const { logout } = useAuth();
     const { cartItems, addToCart, decreaseQuantity, removeItem } = useCart();
 
     const getTotalPrice = () => {
@@ -17,29 +15,7 @@ const CartPage = () => {
 
     return (
         <>
-            <nav className={styles.navbar}>
-                <Link to="/" className={styles.logo}>
-                    <img src="/logo.png" alt="Mora & Meal Logo" className={styles.logoImage} />
-                    <span className={styles.logoText}>Mora & Meal</span>
-                </Link>
-                <div className={styles.userIcons}>
-                    <Link to="/cart">
-                        <img src="/carrinho.png" alt="Carrinho" className={styles.navIcon} />
-                    </Link>
-                    <Link to="/profile">
-                        <img src="/perfil.png" alt="Perfil" className={styles.navIcon} />
-                    </Link>
-                    <img src="/notificacao.png" alt="Notificação" className={styles.navIcon} />
-
-                    <img
-                        src="/porta.png"
-                        alt="Sair"
-                        className={styles.navIcon}
-                        onClick={logout}
-                        style={{ cursor: 'pointer' }}
-                    />
-                </div>
-            </nav>
+            <Navbar />
 
             <div className={styles.cartContainer}>
                 <h2 className={styles.title}>Seu Carrinho</h2>
@@ -79,7 +55,6 @@ const CartPage = () => {
                 )}
             </div>
 
-            {}
             <Footer />
         </>
     );

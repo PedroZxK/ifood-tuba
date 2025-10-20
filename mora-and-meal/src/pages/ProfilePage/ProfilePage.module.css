@@ -1,21 +1,11 @@
-/* --- Cores da Paleta --- */
-/* Primária (Amarelo): #f5ce63 */
-/* Fundo do Menu/Footer: #FFEEAF */
-/* Fundo do Container: #fff8e7 (Amarelo bem claro) */
-/* Destaque/Botão Sair: #E63946 (Vermelho) */
-/* Destaque/Botão Hover: #D62828 (Vermelho Escuro) */
-
 .profileContainer {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #fff8e7;
-    /* Fundo Levemente Amarelado */
     font-family: 'HYWenHei', sans-serif;
     color: #000;
 }
-
-/* --- Navbar (Copiado/Adaptado do MenuPage) --- */
 
 .navbar {
     display: flex;
@@ -31,7 +21,6 @@
 }
 
 .logoArea {
-    /* Usado para envolver o link/logo */
     display: flex;
     align-items: center;
 }

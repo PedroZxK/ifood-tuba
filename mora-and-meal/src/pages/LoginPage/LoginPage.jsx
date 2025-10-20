@@ -108,7 +108,7 @@ const LoginPage = () => {
           </button>
           <p className={styles.registerLink}>
             Não tem uma conta?{" "}
-            <Link to="/cadastro " className={styles.registerAnchor}>
+            <Link to="/register" className={styles.registerAnchor}>
               Registre-se agora!
             </Link>
           </p>

@@ -6,79 +6,7 @@
     padding-bottom: 3rem;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 4rem;
-    background-color: rgba(245, 206, 99, 0.95);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 0 0 15px 15px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.logoArea a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #000;
-}
-
-.logoImage {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-}
-
-.logoText {
-    font-size: 1.3rem;
-    font-weight: bold;
-    font-family: 'HYWenHei', Arial, sans-serif;
-}
-
-.searchBar {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 50px;
-    padding: 0.5rem 1rem;
-    width: 300px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.searchIcon {
-    width: 20px;
-    height: 20px;
-    margin-right: 0.5rem;
-}
-
-.searchInput {
-    border: none;
-    outline: none;
-    flex-grow: 1;
-    background-color: transparent;
-    font-size: 1rem;
-    color: #000;
-}
-
-.userIcons {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.navIcon {
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.navIcon:hover {
-    transform: scale(1.15);
-}
+/* ▼▼▼ REMOVA os estilos de .navbar, .logo, .userIcons, etc. daqui ▼▼▼ */
 
 .mainContent {
     padding: 3rem 4rem;
@@ -86,7 +14,7 @@
 
 .pageTitle {
     font-size: 2.8rem;
-    color: #000;
+    color: white;
     text-align: center;
     margin-bottom: 3rem;
 }
@@ -234,6 +162,7 @@
     font-size: 1.25rem;
     cursor: pointer;
     transition: all 0.3s;
+    text-decoration: none;
 }
 
 .payButton:hover {
@@ -247,8 +176,8 @@
         grid-template-columns: 1fr;
     }
 
-    .searchBar {
-        width: 200px;
+    .mainContent {
+        padding: 2rem;
     }
 
     .pageTitle {

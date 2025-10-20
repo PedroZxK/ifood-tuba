@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     await auth.signOut();
     setUser(null);
     setFirebaseUser(null);
-    navigate('/login');
+    navigate('/');
   };
 
   // 💡 FUNÇÃO DE ATUALIZAÇÃO QUE SALVA NO FIRESTORE (Passo Crítico)
