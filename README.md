@@ -78,3 +78,44 @@ Siga os passos abaixo para configurar e executar o projeto no seu ambiente local
 ## 📁 Arquitetura do Projeto
 
 A estrutura de pastas foi organizada para promover a separação de responsabilidades e facilitar a manutenção:
+
+src/
+|-- components/     # Componentes reutilizáveis (Navbar, Footer, ProtectedRoute)
+|-- contexts/       # Gestão de estado global (AuthContext, CartContext)
+|-- firebase/       # Configuração e inicialização do Firebase (config.js)
+|-- hooks/          # Hooks customizados (useCart)
+|-- pages/          # Componentes que representam as páginas da aplicação
+|-- App.jsx         # Definição das rotas da aplicação
+|-- main.jsx        # Ponto de entrada da aplicação
+
+## 🔐 Gestão de Estado e Autenticação
+
+### `AuthContext.jsx`
+
+Este contexto é responsável por toda a lógica de autenticação e gestão de dados do utilizador.
+
+* Utiliza `onAuthStateChanged` para monitorizar o estado de login do utilizador em tempo real.
+* Sincroniza os dados do perfil (nome, avatar) com o Firestore através do `onSnapshot`.
+* Fornece a função `updateUser` para atualizar os dados do perfil no banco de dados.
+* Expõe o estado `isAuthenticated` e `loading` para controlar o acesso a rotas protegidas.
+
+### `CartContext.jsx`
+
+Este contexto gere o estado do carrinho de compras.
+
+* Mantém um array `cartItems` com os produtos adicionados.
+* Disponibiliza funções para `addToCart`, `decreaseQuantity`, `removeItem` e `clearCart`.
+
+## 🗺️ Roteamento
+
+O roteamento é definido no ficheiro `App.jsx` usando `react-router-dom`.
+
+* **Rotas Públicas:** `/`, `/login`, `/cadastro`, `/forgot-password`.
+* **Rotas Protegidas:** `/menu`, `/profile`, `/cart`, `/pedidos`, `/pedido-concluido`.
+
+O componente `ProtectedRoute.jsx` verifica a autenticação do utilizador antes de renderizar as rotas protegidas, redirecionando para a página de login caso não esteja autenticado.
+
+## 📧 Contato
+Matheus Arcangelo Pestana - https://www.linkedin.com/in/matheus-arcangelo/ - matheus0pestana@gmail.com  
+Eduardo de Oliveira Couto - https://www.linkedin.com/in/eduardo-couto-a0a858279/ - d.couto1314@gmail.com  
+Pedro Gabriel Moreira dos Santos - https://www.linkedin.com/in/pedro-santos-74480726b/ - pedrogabrielxx268@gmail.com
